@@ -1,0 +1,47 @@
+#include "stdio.h"
+
+void main( void )
+{
+    int x, y, count, maxitr;
+    float creal, cimag;
+    float zreal, zimag;
+    float zm, zn, zl, zr2;
+
+    maxitr = 24;
+    for ( y = -39; y <= 39; ++y )
+    {
+        for ( x = -39; x <= 39; ++x )
+        {
+            creal = x / 20.;
+            cimag = y / 20.;
+            zreal = creal;
+            zimag = cimag;
+            for ( count = 1; count < maxitr; ++count )
+            {
+                zm  =  zreal * zreal;
+                zn  =  zimag * zimag;
+                zl  =  zm + zn;
+                if ( zl > 4. )
+                {
+                    break;
+                }
+                zr2 = zm - zn + creal;
+                zimag = zreal * zimag * 2. + cimag;
+                zreal = zr2;
+            }
+            /* set ink color */
+            printf( "\033[38;5;%dm", 184 - ( 7 * count ) );
+            /* set paper color */
+            printf( "\033[48;5;%dm", 232 + count );
+            /* put down a tick */
+            printf( "#" );
+        }
+        printf( "\n" );
+    }
+}
+
+
+
+
+
+
